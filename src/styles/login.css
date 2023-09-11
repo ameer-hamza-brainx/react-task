@@ -1,0 +1,31 @@
+.login-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: rgb(218, 216, 216);
+    background-image: linear-gradient(rgb(199, 118, 70),rgb(111, 111, 207));
+}
+.center-patch{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(78, 77, 77);
+    width: 400px;
+    height: 300px;
+    border: none;
+    gap: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+.input-field{
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+}
+.sub-btn{
+    width: 140px;
+    align-self: center;
+    padding: 0.4rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: none;
+}
