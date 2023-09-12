@@ -1,0 +1,15 @@
+.center-patch-signup{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(78, 77, 77);
+    width: 400px;
+    border: none;
+    gap: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    padding: 5rem 0rem;
+    box-shadow: 12px 0 15px -4px rgba(255,255,255,0.4), -12px 0 8px -4px rgba(255,255,255,0.3);
+}
+.error{
+    color: red;
+    font-size: 0.8rem;
+}
