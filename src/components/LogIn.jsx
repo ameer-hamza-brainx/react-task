@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setEmail } from '../actions/index';
+import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 
 function LogIn() {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
-
+  const dispatch = useDispatch();
+  const emailState = useSelector((state)=> state.setEmail)
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -23,8 +27,8 @@ function LogIn() {
       if(parseObj.password === password)
       {
         setIsValidUser(true);
-        window.location.href = "http://www.google.com";
-        
+        dispatch(setEmail(username));
+        console.log(emailState);
       }
       else{
         setIsValidUser(false);
@@ -72,6 +76,7 @@ function LogIn() {
         </div>
         <div className='error'>{isValidUser?"":"Invalid credentials!"}</div>
         <button className='sub-btn' type="submit">Login</button>
+        <div>{emailState}</div>
         <Link to='/forgotpassword' className='signup-link'>Forgot password?</Link>
         <Link to='signup' className='signup-link'>Don't have an account? click here to sign up</Link>
       </form>

@@ -14,6 +14,8 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passErrorFlag, setPassErrorFlag] = useState(true);
 
+    const [userExist, setuserExist] = useState(false);
+
     //test
     
 
@@ -30,16 +32,26 @@ function SignUp() {
     }
     else
     {
-        let obj = {
-        name:name,
-        password:password,
-        emailVerified:false
+      let checkExistance = localStorage.getItem(email);
+      if(checkExistance === null)
+      {
+          setuserExist(false);
+          let obj = {
+          name:name,
+          password:password,
+          emailVerified:false
+        }
+          localStorage.setItem(email, JSON.stringify(obj));
+          setName('');
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          window.location.href = "./";
       }
-        localStorage.setItem(email, JSON.stringify(obj));
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+      else
+      {
+        setuserExist(true);
+      }
     }
   };
 
@@ -126,6 +138,7 @@ function SignUp() {
         <div className='error'>{passErrorFlag?"":"Password and confirm password not same!"}</div>
 
         <button className='sub-btn' type="submit">SignUp</button>
+        <div className='error'>{userExist?"User already exist!":""}</div>
         <Link to='/' className='signup-link'>Already have an account? click here to sign in</Link>
       </form>
     </div>
