@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../styles/signup.css"
+import { emailRegex, onlyNumbersOrSpecial } from "../global-constants"
 
 function SignUp() {
   
@@ -11,22 +11,31 @@ function SignUp() {
     const [password, setPassword] = useState('');
 
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [passErrorFlag, setPassErrorFlag] = useState(true)
+    const [passErrorFlag, setPassErrorFlag] = useState(true);
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //test
+    
+
     const [isValid, setIsValid] = useState(true);
 
-    const onlyNumbersOrSpecial = /^[0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/]+$/;
+    
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if(!isValid || !nameValidity || !passErrorFlag)
     {
+        console.log(localStorage.getItem("ameerhamza1567@gmail.com").name);
         return;
     }
     else
     {
+        let obj = {
+        name:name,
+        password:password,
+        emailVerified:false
+      }
+        localStorage.setItem(email, JSON.stringify(obj));
         setName('');
         setEmail('');
         setPassword('');

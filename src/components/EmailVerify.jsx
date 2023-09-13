@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import "../styles/login.css"
 
 function EmailVerify() {
   
   const [OTP, setOTP] = useState('');
   const [otpFlag, setOtpFlag] = useState(true);
 
+  const otp = 123;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(OTP=='123')
+    if(OTP==otp)
     {
         setOtpFlag(true);
         setOTP('');
