@@ -18,6 +18,7 @@ function ForgotPassword() {
     {
       setEmailValue('');
       setUserExist(true);
+      window.location.href = "./emailverify";
     }
   };
 

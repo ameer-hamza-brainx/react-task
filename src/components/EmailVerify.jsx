@@ -5,7 +5,7 @@ function EmailVerify() {
   const [OTP, setOTP] = useState('');
   const [otpFlag, setOtpFlag] = useState(true);
 
-  const otp = 123;
+  const otp = "123";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +13,7 @@ function EmailVerify() {
     {
         setOtpFlag(true);
         setOTP('');
+        window.location.href = "./resetpassword";
     }
     else
     {

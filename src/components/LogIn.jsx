@@ -72,8 +72,8 @@ function LogIn() {
         </div>
         <div className='error'>{isValidUser?"":"Invalid credentials!"}</div>
         <button className='sub-btn' type="submit">Login</button>
-        <Link to='/signup' className='signup-link'>Forgot password?</Link>
-        <Link to='forgotpassword' className='signup-link'>Don't have an account? click here to sign up</Link>
+        <Link to='/forgotpassword' className='signup-link'>Forgot password?</Link>
+        <Link to='signup' className='signup-link'>Don't have an account? click here to sign up</Link>
       </form>
     </div>
     </>
