@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../styles/login.css"
+
 
 function LogIn() {
   
@@ -9,20 +9,15 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('Username:', username);
-    console.log('Password:', password);
-
     // Clear the form fields after submission
     setUsername('');
     setPassword('');
   };
 
   function setUser(name){
-        console.log(name);
         setUsername(name);
   }
   function setPass(pass){
-        console.log(pass);
         setPassword(pass);
   }
 
@@ -43,6 +38,7 @@ function LogIn() {
             required
           />
         </div>
+        <div className='error'></div>
         <div className="form-group">
           <input
             className="input-field"
@@ -55,7 +51,10 @@ function LogIn() {
             required
           />
         </div>
+        <div className='error'></div>
         <button className='sub-btn' type="submit">Login</button>
+        <a href='#' className='signup-link'>Forgot password?</a>
+        <a href='#' className='signup-link'>Don't have an account? click here to sign up</a>
       </form>
     </div>
     </>
