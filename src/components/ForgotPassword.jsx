@@ -9,8 +9,16 @@ function ForgotPassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-
-    // Clear the form fields after submission
+    let jsonobj = localStorage.getItem(email);
+    if(jsonobj === null)
+    {
+      setUserExist(false);
+    }
+    else
+    {
+      setEmailValue('');
+      setUserExist(true);
+    }
   };
 
   function setEmailValue(email){
@@ -35,7 +43,7 @@ function ForgotPassword() {
             required
           />
         </div>
-        <div className='error'></div>
+        <div className='error'>{userExist?"":"User not exist!"}</div>
         <button className='sub-btn' type="submit">submit</button>
       </form>
     </div>

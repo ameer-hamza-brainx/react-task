@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { emailRegex, onlyNumbersOrSpecial } from "../global-constants"
+import { Link } from 'react-router-dom';
 
 function SignUp() {
   
@@ -25,7 +26,6 @@ function SignUp() {
     
     if(!isValid || !nameValidity || !passErrorFlag)
     {
-        console.log(localStorage.getItem("ameerhamza1567@gmail.com").name);
         return;
     }
     else
@@ -126,7 +126,7 @@ function SignUp() {
         <div className='error'>{passErrorFlag?"":"Password and confirm password not same!"}</div>
 
         <button className='sub-btn' type="submit">SignUp</button>
-        <a href='#' className='signup-link'>Already have an account? click here to sign in</a>
+        <Link to='/' className='signup-link'>Already have an account? click here to sign in</Link>
       </form>
     </div>
     </>

@@ -1,17 +1,36 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 
 function LogIn() {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isValidUser, setIsValidUser] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Clear the form fields after submission
-    setUsername('');
-    setPassword('');
+    let jsonobj = localStorage.getItem(username)
+    if(jsonobj === null)
+    {
+      setIsValidUser(false);
+      return;
+    }
+    else
+    {
+      let parseObj = JSON.parse(jsonobj);
+      if(parseObj.password === password)
+      {
+        setIsValidUser(true);
+        window.location.href = "http://www.google.com";
+        
+      }
+      else{
+        setIsValidUser(false);
+      }
+    }
+    
   };
 
   function setUser(name){
@@ -51,10 +70,10 @@ function LogIn() {
             required
           />
         </div>
-        <div className='error'></div>
+        <div className='error'>{isValidUser?"":"Invalid credentials!"}</div>
         <button className='sub-btn' type="submit">Login</button>
-        <a href='#' className='signup-link'>Forgot password?</a>
-        <a href='#' className='signup-link'>Don't have an account? click here to sign up</a>
+        <Link to='/signup' className='signup-link'>Forgot password?</Link>
+        <Link to='forgotpassword' className='signup-link'>Don't have an account? click here to sign up</Link>
       </form>
     </div>
     </>

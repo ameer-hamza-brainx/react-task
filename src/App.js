@@ -6,16 +6,20 @@ import ResetPassword from './components/ResetPassword';
 import "./styles/login.css"
 import './App.css';
 import "./styles/signup.css"
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <LogIn />
-      <SignUp />
-      <EmailVerify />
-      <ForgotPassword />
-      <ResetPassword />
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<LogIn/> }/>
+        <Route exact path="/signup" element={<SignUp/> }/>
+        <Route exact path="/emailverify" element={<EmailVerify/> }/>
+        <Route exact path="/forgotpassword" element={<ForgotPassword/> }/>
+        <Route exact path="/resetpassword" element={<ResetPassword/> }/>
+      </Routes>
+    </Router>
   );
 }
 

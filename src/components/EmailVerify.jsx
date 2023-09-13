@@ -9,7 +9,7 @@ function EmailVerify() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(OTP==otp)
+    if(OTP===otp)
     {
         setOtpFlag(true);
         setOTP('');
