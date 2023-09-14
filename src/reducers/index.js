@@ -5,7 +5,7 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
     authentication,
-    emailReducer
+    email: emailReducer,
 });
 
 export default rootReducer

@@ -10,7 +10,9 @@ function LogIn() {
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
   const dispatch = useDispatch();
-  const emailState = useSelector((state)=> state.setEmail)
+  const emailState = useSelector((state)=> state.emailState)
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -29,6 +31,8 @@ function LogIn() {
         setIsValidUser(true);
         dispatch(setEmail(username));
         console.log(emailState);
+        
+        // window.location.href = "./todo"
       }
       else{
         setIsValidUser(false);
