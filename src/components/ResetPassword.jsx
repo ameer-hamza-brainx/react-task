@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 function ResetPassword() {
   
@@ -8,18 +8,45 @@ function ResetPassword() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passErrorFlag, setPassErrorFlag] = useState(true)
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+  useEffect(() => {
+
+    if (token) {
+      // console.log(token);
+      const storedToken = localStorage.getItem(token);
+      // console.log(storedToken);
+
+      if (storedToken) {
+        
+      } else {
+        window.location.href = "/";
+      }
+    } else {
+      
+      window.location.href = "/";
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if(!passErrorFlag)
     {
+      // console.log(token);
         return;
     }
     else
     {
-        setPassword('');
-        setConfirmPassword('');
+        let email = localStorage.getItem(token);
+        let oldData = JSON.parse(localStorage.getItem(email));
+        console.log(oldData);
+        oldData.password = password;
+        localStorage.setItem(email,JSON.stringify(oldData));
+        setPass("");
+        setConPass("");
+        localStorage.removeItem(token);
+        window.location.href = "/";
     }
   };
 
@@ -34,7 +61,6 @@ function ResetPassword() {
   function setConPass(confirmPassword){
       setConfirmPassword(confirmPassword);
         password !== confirmPassword?setPassErrorFlag(false):setPassErrorFlag(true);
-
   }
 
   return (

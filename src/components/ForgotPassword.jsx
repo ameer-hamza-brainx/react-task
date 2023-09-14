@@ -5,6 +5,7 @@ function ForgotPassword() {
   
   const [email, setEmail] = useState('');
   const [userExist, setUserExist] = useState(true);
+  const [resetLink, setResetLink] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,11 +17,23 @@ function ForgotPassword() {
     }
     else
     {
-      setEmailValue('');
       setUserExist(true);
-      window.location.href = "./emailverify";
+      const token = generateToken(16);
+      console.log(token);
+      localStorage.setItem(token,email)
+      setResetLink("./resetpassword?token="+token);
+      setEmailValue('');
     }
   };
+  function generateToken(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        token += characters.charAt(randomIndex);
+    }
+    return token;
+  }
 
   function setEmailValue(email){
         setEmail(email);
@@ -46,6 +59,7 @@ function ForgotPassword() {
         </div>
         <div className='error'>{userExist?"":"User not exist!"}</div>
         <button className='sub-btn' type="submit">submit</button>
+        <a href={resetLink} className='signup-link'>{!resetLink?"":"Follow this link to reset password"}</a>
       </form>
     </div>
     </>
