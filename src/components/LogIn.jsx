@@ -13,7 +13,6 @@ function LogIn() {
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
   const dispatch = useDispatch();
-  // const emailState = useSelector((state)=> state.email.email)
   const loggedState = useSelector((state)=> state.authentication)
 
   useEffect(() => {
@@ -27,7 +26,6 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Clear the form fields after submission
     let jsonobj = localStorage.getItem(username)
     if(jsonobj === null)
     {

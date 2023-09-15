@@ -35,7 +35,6 @@ function ToDo() {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
-    // saveToLocalStorage();
   };
   const handleEditTask = (index, task) => {
   setEditIndex(index);
@@ -53,7 +52,7 @@ const handleUpdateTask = (index) => {
     updatedTasks[index] = editedTask;
     setTasks(updatedTasks);
   }
-  setEditIndex(-1); // Exit edit mode
+  setEditIndex(-1); 
 };
 
 const handleKeyPress = (e, index) => {

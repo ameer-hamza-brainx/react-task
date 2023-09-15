@@ -13,9 +13,7 @@ function ResetPassword() {
   useEffect(() => {
 
     if (token) {
-      // console.log(token);
       const storedToken = localStorage.getItem(token);
-      // console.log(storedToken);
 
       if (storedToken) {
         
@@ -33,7 +31,6 @@ function ResetPassword() {
     
     if(!passErrorFlag)
     {
-      // console.log(token);
         return;
     }
     else
@@ -46,6 +43,7 @@ function ResetPassword() {
         setPass("");
         setConPass("");
         localStorage.removeItem(token);
+        alert("Password has been changed");
         window.location.href = "/";
     }
   };

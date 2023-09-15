@@ -1,6 +1,4 @@
 
-// emailReducer.js
-
 const initialState = {
   email: 'test@gmail.com'
 };
