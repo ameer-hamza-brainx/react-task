@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { loggedIn } from '../actions/index';
+import { useDispatch } from 'react-redux';
 
 function EmailVerify() {
-  
+  const navigate = useNavigate();
   const [OTP, setOTP] = useState('');
   const [otpFlag, setOtpFlag] = useState(true);
-
+  const emailState = useSelector((state)=> state.email.email)
+  const dispatch = useDispatch();
   const otp = "123";
 
   const handleSubmit = (e) => {
@@ -13,7 +18,12 @@ function EmailVerify() {
     {
         setOtpFlag(true);
         setOTP('');
-        window.location.href = "./resetpassword";
+        let obj = JSON.parse(localStorage.getItem(emailState));
+        obj.emailVerified = true;
+        localStorage.setItem(emailState,JSON.stringify(obj));
+        alert("email has been verified");
+        dispatch(loggedIn());
+        navigate("/todo");
     }
     else
     {

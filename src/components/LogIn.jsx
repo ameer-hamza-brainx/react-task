@@ -39,10 +39,19 @@ function LogIn() {
       let parseObj = JSON.parse(jsonobj);
       if(parseObj.password === password)
       {
-        setIsValidUser(true);
-        dispatch(setEmail(username));
-        dispatch(loggedIn());
-        navigate("/todo");
+        if(parseObj.emailVerified)
+        {
+          setIsValidUser(true);
+          dispatch(setEmail(username));
+          dispatch(loggedIn());
+          navigate("/todo");
+        }
+        else
+        {
+          console.log(parseObj.emailVerified);
+          dispatch(setEmail(username));
+          navigate("/emailverify");
+        }
       }
       else{
         setIsValidUser(false);
