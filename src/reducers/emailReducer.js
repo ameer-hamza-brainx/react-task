@@ -2,7 +2,7 @@
 // emailReducer.js
 
 const initialState = {
-  email: '', // Initial email state is empty
+  email: 'test@gmail.com'
 };
 
 const emailReducer = (state = initialState, action) => {

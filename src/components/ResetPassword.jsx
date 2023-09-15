@@ -57,6 +57,10 @@ function ResetPassword() {
         {
             setPassErrorFlag(true);
         }
+        else
+        {
+          setPassErrorFlag(false);
+        }
   }
   function setConPass(confirmPassword){
       setConfirmPassword(confirmPassword);

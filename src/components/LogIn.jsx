@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setEmail } from '../actions/index';
-import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { loggedIn } from '../actions/index';
+import { useNavigate } from "react-router-dom";
 
 function LogIn() {
-  
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
@@ -31,8 +33,8 @@ function LogIn() {
         setIsValidUser(true);
         dispatch(setEmail(username));
         console.log(emailState);
-        
-        // window.location.href = "./todo"
+        dispatch(loggedIn());
+        navigate("/todo");
       }
       else{
         setIsValidUser(false);

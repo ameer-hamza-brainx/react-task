@@ -14,8 +14,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/login" element={<LogIn/> }/>
-        <Route exact path="/" element={<ToDo/> }/>
+        <Route exact path="/" element={<LogIn/> }/>
+        <Route exact path="/todo" element={<ToDo/> }/>
         <Route exact path="/signup" element={<SignUp/> }/>
         <Route exact path="/emailverify" element={<EmailVerify/> }/>
         <Route exact path="/forgotpassword" element={<ForgotPassword/> }/>
