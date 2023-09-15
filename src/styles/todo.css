@@ -65,9 +65,9 @@
 .welcome-text{
     position: absolute;
     color: rgb(199, 118, 70);
-    top: 40px;
+    top: 35px;
     left: 40px;
-    font-size: 1.3rem;
+    font-size: 1.8rem;
 }
 @media screen  and (max-width: 700px){
     .container{

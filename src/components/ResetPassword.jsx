@@ -20,10 +20,10 @@ function ResetPassword() {
       if (storedToken) {
         
       } else {
+        alert("Token has been expired");
         window.location.href = "/";
       }
     } else {
-      
       window.location.href = "/";
     }
   }, []);

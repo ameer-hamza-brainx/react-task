@@ -22,6 +22,7 @@ function SignUp() {
     const [isValid, setIsValid] = useState(true);
 
     
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();

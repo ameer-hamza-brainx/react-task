@@ -5,6 +5,7 @@ import { setEmail } from '../actions/index';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { loggedIn } from '../actions/index';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 function LogIn() {
   const navigate = useNavigate();
@@ -12,8 +13,16 @@ function LogIn() {
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
   const dispatch = useDispatch();
-  const emailState = useSelector((state)=> state.emailState)
+  // const emailState = useSelector((state)=> state.email.email)
+  const loggedState = useSelector((state)=> state.authentication)
 
+  useEffect(() => {
+    if(loggedState)
+    {
+      navigate("/todo");
+    }
+  }, [])
+  
   
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +41,6 @@ function LogIn() {
       {
         setIsValidUser(true);
         dispatch(setEmail(username));
-        console.log(emailState);
         dispatch(loggedIn());
         navigate("/todo");
       }
@@ -82,7 +90,6 @@ function LogIn() {
         </div>
         <div className='error'>{isValidUser?"":"Invalid credentials!"}</div>
         <button className='sub-btn' type="submit">Login</button>
-        <div>{emailState}</div>
         <Link to='/forgotpassword' className='signup-link'>Forgot password?</Link>
         <Link to='signup' className='signup-link'>Don't have an account? click here to sign up</Link>
       </form>
