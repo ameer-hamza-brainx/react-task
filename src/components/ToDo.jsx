@@ -20,7 +20,7 @@ function ToDo() {
   const [taskChecked, setTaskChecked] = useState(Array(tasks.length).fill(false));
   const dispatch = useDispatch();
   const emailState = useSelector((state)=> state.email.email)
-  const loggedState = useSelector((state)=> state.authentication)
+  const isLogIn = useSelector((state)=> state.authentication)
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState();
 
@@ -77,8 +77,7 @@ const handleLogout = () =>{
 }
 
   useEffect(() => {
-    console.log(emailState);
-    if(!loggedState)
+    if(!isLogIn)
     {
       navigate("/");
     }
@@ -96,7 +95,7 @@ const handleLogout = () =>{
       }
       updateName();
     }
-  }, [loggedState])
+  }, [isLogIn])
   
   useEffect(() => {
     if (!loading) {

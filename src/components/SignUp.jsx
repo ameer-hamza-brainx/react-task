@@ -52,6 +52,7 @@ function SignUp() {
       else
       {
         setuserExist(true);
+        return;
       }
     }
   };

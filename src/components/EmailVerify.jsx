@@ -10,6 +10,8 @@ function EmailVerify() {
   const [otpFlag, setOtpFlag] = useState(true);
   const emailState = useSelector((state)=> state.email.email)
   const dispatch = useDispatch();
+
+  // TODO: Replace this hard-coded otp with a configurable one
   const otp = "123";
 
   const handleSubmit = (e) => {
@@ -18,9 +20,9 @@ function EmailVerify() {
     {
         setOtpFlag(true);
         setOTP('');
-        let obj = JSON.parse(localStorage.getItem(emailState));
-        obj.emailVerified = true;
-        localStorage.setItem(emailState,JSON.stringify(obj));
+        let user = JSON.parse(localStorage.getItem(emailState));
+        user.emailVerified = true;
+        localStorage.setItem(emailState,JSON.stringify(user));
         alert("email has been verified");
         dispatch(loggedIn());
         navigate("/todo");
