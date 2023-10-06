@@ -1,17 +1,61 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setEmail } from '../actions/index';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { loggedIn } from '../actions/index';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 function LogIn() {
-  
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isValidUser, setIsValidUser] = useState(true);
+  const dispatch = useDispatch();
+  const loggedState = useSelector((state)=> state.authentication)
 
+  useEffect(() => {
+    if(loggedState)
+    {
+      navigate("/todo");
+    }
+  }, [])
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Clear the form fields after submission
-    setUsername('');
-    setPassword('');
+    let jsonobj = localStorage.getItem(username)
+    if(jsonobj === null)
+    {
+      setIsValidUser(false);
+      return;
+    }
+    else
+    {
+      let parseObj = JSON.parse(jsonobj);
+      if(parseObj.password === password)
+      {
+        if(parseObj.emailVerified)
+        {
+          setIsValidUser(true);
+          dispatch(setEmail(username));
+          dispatch(loggedIn());
+          navigate("/todo");
+        }
+        else
+        {
+          console.log(parseObj.emailVerified);
+          dispatch(setEmail(username));
+          navigate("/emailverify");
+        }
+      }
+      else{
+        setIsValidUser(false);
+      }
+    }
+    
   };
 
   function setUser(name){
@@ -51,10 +95,10 @@ function LogIn() {
             required
           />
         </div>
-        <div className='error'></div>
+        <div className='error'>{isValidUser?"":"Invalid credentials!"}</div>
         <button className='sub-btn' type="submit">Login</button>
-        <a href='#' className='signup-link'>Forgot password?</a>
-        <a href='#' className='signup-link'>Don't have an account? click here to sign up</a>
+        <Link to='/forgotpassword' className='signup-link'>Forgot password?</Link>
+        <Link to='signup' className='signup-link'>Don't have an account? click here to sign up</Link>
       </form>
     </div>
     </>

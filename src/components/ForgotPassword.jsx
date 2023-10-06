@@ -1,17 +1,40 @@
 import React, { useState } from 'react';
-import "../styles/login.css"
 
 function ForgotPassword() {
   
   const [email, setEmail] = useState('');
   const [userExist, setUserExist] = useState(true);
+  const [resetLink, setResetLink] = useState('')
 
+    
   const handleSubmit = (e) => {
     e.preventDefault();
     
-
-    // Clear the form fields after submission
+    let jsonobj = localStorage.getItem(email);
+    if(jsonobj === null)
+    {
+      setUserExist(false);
+    }
+    else
+    {
+      setUserExist(true);
+      const token = generateToken(16);
+      console.log(token);
+      localStorage.setItem(token,email)
+      setResetLink("./resetpassword?token="+token);
+      setEmailValue('');
+    }
   };
+  function generateToken(length) {
+    // TODO: Replace this hard-coded chracters with a configurable one
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        token += characters.charAt(randomIndex);
+    }
+    return token;
+  }
 
   function setEmailValue(email){
         setEmail(email);
@@ -35,8 +58,9 @@ function ForgotPassword() {
             required
           />
         </div>
-        <div className='error'></div>
+        <div className='error'>{userExist?"":"User not exist!"}</div>
         <button className='sub-btn' type="submit">submit</button>
+        <a href={resetLink} className='signup-link'>{!resetLink?"":"Follow this link to reset password"}</a>
       </form>
     </div>
     </>

@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { loggedIn } from '../actions/index';
+import { useDispatch } from 'react-redux';
 
 function EmailVerify() {
-  
+  const navigate = useNavigate();
   const [OTP, setOTP] = useState('');
   const [otpFlag, setOtpFlag] = useState(true);
+  const emailState = useSelector((state)=> state.email.email)
+  const dispatch = useDispatch();
 
-  const otp = 123;
+  // TODO: Replace this hard-coded otp with a configurable one
+  const otp = "123";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(OTP==otp)
+    if(OTP===otp)
     {
         setOtpFlag(true);
         setOTP('');
+        let user = JSON.parse(localStorage.getItem(emailState));
+        user.emailVerified = true;
+        localStorage.setItem(emailState,JSON.stringify(user));
+        alert("email has been verified");
+        dispatch(loggedIn());
+        navigate("/todo");
     }
     else
     {

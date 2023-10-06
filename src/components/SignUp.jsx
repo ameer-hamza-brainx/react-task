@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { emailRegex, onlyNumbersOrSpecial } from "../global-constants"
+import { Link } from 'react-router-dom';
 
 function SignUp() {
   
@@ -13,33 +14,46 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passErrorFlag, setPassErrorFlag] = useState(true);
 
+    const [userExist, setuserExist] = useState(false);
+
     //test
     
 
     const [isValid, setIsValid] = useState(true);
 
     
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if(!isValid || !nameValidity || !passErrorFlag)
     {
-        console.log(localStorage.getItem("ameerhamza1567@gmail.com").name);
         return;
     }
     else
     {
-        let obj = {
-        name:name,
-        password:password,
-        emailVerified:false
+      let checkExistance = localStorage.getItem(email);
+      if(checkExistance === null)
+      {
+          setuserExist(false);
+          let obj = {
+          name:name,
+          password:password,
+          emailVerified:false
+        }
+          localStorage.setItem(email, JSON.stringify(obj));
+          setName('');
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          window.location.href = "./";
       }
-        localStorage.setItem(email, JSON.stringify(obj));
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+      else
+      {
+        setuserExist(true);
+        return;
+      }
     }
   };
 
@@ -56,6 +70,10 @@ function SignUp() {
         if(pass === confirmPassword)
         {
             setPassErrorFlag(true);
+        }
+        else
+        {
+          setPassErrorFlag(false);
         }
   }
   function setConPass(confirmPassword){
@@ -126,7 +144,8 @@ function SignUp() {
         <div className='error'>{passErrorFlag?"":"Password and confirm password not same!"}</div>
 
         <button className='sub-btn' type="submit">SignUp</button>
-        <a href='#' className='signup-link'>Already have an account? click here to sign in</a>
+        <div className='error'>{userExist?"User already exist!":""}</div>
+        <Link to='/' className='signup-link'>Already have an account? click here to sign in</Link>
       </form>
     </div>
     </>
