@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { setEmail } from '../actions/index';
+import axios from 'axios';
 
 function ToDo() {
   const navigate = useNavigate();
@@ -24,10 +25,6 @@ function ToDo() {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState();
 
-  const updateName = () =>{
-    let getName = JSON.parse(localStorage.getItem(emailState)).name;
-    setName(getName);
-  }
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -41,9 +38,10 @@ function ToDo() {
   setEditedTask(task);
 };
   
-const saveToLocalStorage = () =>{
-  let obj = JSON.stringify(tasks);
-  localStorage.setItem(emailState+"tasks",obj);
+const saveToDb = () =>{
+  axios.post("http://localhost:5000/updateTask",{
+        emailState,tasks
+      })
 };
 
 const handleUpdateTask = (index) => {
@@ -83,23 +81,19 @@ const handleLogout = () =>{
     }
     else
     {
-      let tasksObj = JSON.parse(localStorage.getItem(emailState+"tasks"));
-      if(tasksObj)
-      {
-        setTasks(tasksObj);
+      axios.post("http://localhost:5000/getTasks",{
+        emailState
+      }).then(res=>{
+        setTasks(res.data.tasks);
+        setName(res.data.name);
         setLoading(false);
-      }
-      else
-      {
-        setLoading(false);
-      }
-      updateName();
+      })
     }
   }, [isLogIn])
   
   useEffect(() => {
     if (!loading) {
-      saveToLocalStorage();
+      saveToDb();
     }
   }, [tasks, loading]); 
 

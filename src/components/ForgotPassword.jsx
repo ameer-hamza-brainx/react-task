@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 function ForgotPassword() {
@@ -10,31 +11,26 @@ function ForgotPassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    let jsonobj = localStorage.getItem(email);
-    if(jsonobj === null)
-    {
-      setUserExist(false);
-    }
-    else
-    {
-      setUserExist(true);
-      const token = generateToken(16);
-      console.log(token);
-      localStorage.setItem(token,email)
-      setResetLink("./resetpassword?token="+token);
-      setEmailValue('');
-    }
+    // let jsonobj = localStorage.getItem(email);
+    axios.post("http://localhost:5000/forgotPassword",{
+      email
+    }).then(res=>{
+      console.log(res);
+      if(res.data.userExist)
+      {
+        setUserExist(true);
+        setResetLink(res.data.msg);
+        setEmailValue('');
+      }
+      else
+      {
+        setUserExist(false);
+      }
+    }).catch(e=>{
+      console.log(e);
+    })
   };
-  function generateToken(length) {
-    // TODO: Replace this hard-coded chracters with a configurable one
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let token = '';
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        token += characters.charAt(randomIndex);
-    }
-    return token;
-  }
+
 
   function setEmailValue(email){
         setEmail(email);

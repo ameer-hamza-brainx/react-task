@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { loggedIn } from '../actions/index';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 function EmailVerify() {
   const navigate = useNavigate();
@@ -12,20 +13,27 @@ function EmailVerify() {
   const dispatch = useDispatch();
 
   // TODO: Replace this hard-coded otp with a configurable one
-  const otp = "123";
+  const storedOTP = "123";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(OTP===otp)
+    if(OTP===storedOTP)
     {
         setOtpFlag(true);
         setOTP('');
-        let user = JSON.parse(localStorage.getItem(emailState));
-        user.emailVerified = true;
-        localStorage.setItem(emailState,JSON.stringify(user));
-        alert("email has been verified");
-        dispatch(loggedIn());
-        navigate("/todo");
+        axios.post("http://localhost:5000/verifyEmail",{
+          emailState
+        }).then(res=>{
+          if(!res.data.error)
+          {
+            alert("email has been verified");
+            dispatch(loggedIn());
+            navigate("/todo");
+          }
+        }).catch(e)
+        {
+          console.log(e);
+        }
     }
     else
     {

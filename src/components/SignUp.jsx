@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { emailRegex, onlyNumbersOrSpecial } from "../global-constants"
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function SignUp() {
   
@@ -24,7 +25,7 @@ function SignUp() {
     
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     
     if(!isValid || !nameValidity || !passErrorFlag)
@@ -33,27 +34,34 @@ function SignUp() {
     }
     else
     {
-      let checkExistance = localStorage.getItem(email);
-      if(checkExistance === null)
-      {
-          setuserExist(false);
-          let obj = {
-          name:name,
-          password:password,
-          emailVerified:false
-        }
-          localStorage.setItem(email, JSON.stringify(obj));
-          setName('');
-          setEmail('');
-          setPassword('');
-          setConfirmPassword('');
-          window.location.href = "./";
-      }
-      else
-      {
-        setuserExist(true);
-        return;
-      }
+      try{
+      await axios.post("http://localhost:5000/signup",{
+        name,email,password
+      }).then(res=>{
+          if(res.data.error)
+          {
+            setuserExist(true);
+          }
+          else
+          {
+            setuserExist(false);
+            console.log(res);
+              setName('');
+              setEmail('');
+              setPassword('');
+              setConfirmPassword('');
+              console.log(res);
+              window.location.href = "./";
+          }
+      }).catch(e=>{
+        console.log(e);
+      })
+
+    }
+    catch(e){
+      console.log(e);
+    }
+
     }
   };
 

@@ -6,14 +6,16 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { loggedIn } from '../actions/index';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
+import axios from 'axios';
 
 function LogIn() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidUser, setIsValidUser] = useState(true);
   const dispatch = useDispatch();
-  const loggedState = useSelector((state)=> state.authentication)
+  const loggedState = useSelector((state)=> state.authentication);
+
 
   useEffect(() => {
     if(loggedState)
@@ -23,43 +25,47 @@ function LogIn() {
   }, [])
   
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    let jsonobj = localStorage.getItem(username)
-    if(jsonobj === null)
+    try
     {
-      setIsValidUser(false);
-      return;
-    }
-    else
-    {
-      let parseObj = JSON.parse(jsonobj);
-      if(parseObj.password === password)
-      {
-        if(parseObj.emailVerified)
+      await axios.post("http://localhost:5000/signin",{
+        email,password
+      }).then(res=>{
+        if(!res.data.error)
         {
+
           setIsValidUser(true);
-          dispatch(setEmail(username));
-          dispatch(loggedIn());
-          navigate("/todo");
+          if(res.data.isVerified)
+          {
+            dispatch(setEmail(email));
+            dispatch(loggedIn());
+            navigate("/todo");
+            
+          }
+          else
+          {
+            dispatch(setEmail(email));
+            navigate("/emailverify");
+          }
         }
         else
         {
-          console.log(parseObj.emailVerified);
-          dispatch(setEmail(username));
-          navigate("/emailverify");
+          setIsValidUser(false);
         }
-      }
-      else{
+      }).catch(e=>{
         setIsValidUser(false);
-      }
+        console.log(e);
+      })
     }
-    
+    catch(e)
+    {
+      console.log(e);
+    }
   };
 
   function setUser(name){
-        setUsername(name);
+        setemail(name);
   }
   function setPass(pass){
         setPassword(pass);
@@ -74,10 +80,10 @@ function LogIn() {
           <input
             className="input-field"
             type="text"
-            id="username"
-            name="username"
-            placeholder='username'
-            value={username}
+            id="email"
+            name="email"
+            placeholder='email'
+            value={email}
             onChange={(e) => setUser(e.target.value)}
             required
           />
