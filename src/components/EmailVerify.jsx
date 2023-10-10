@@ -32,7 +32,6 @@ function EmailVerify() {
           }
         }).catch(e)
         {
-          console.log(e);
         }
     }
     else

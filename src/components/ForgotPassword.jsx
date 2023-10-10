@@ -5,7 +5,8 @@ function ForgotPassword() {
   
   const [email, setEmail] = useState('');
   const [userExist, setUserExist] = useState(true);
-  const [resetLink, setResetLink] = useState('')
+  const [resetLink, setResetLink] = useState('');
+  const [isDisabled, setisDisabled] = useState(false)
 
     
   const handleSubmit = (e) => {
@@ -15,10 +16,10 @@ function ForgotPassword() {
     axios.post("http://localhost:5000/forgotPassword",{
       email
     }).then(res=>{
-      console.log(res);
       if(res.data.userExist)
       {
         setUserExist(true);
+        setisDisabled(true);
         setResetLink(res.data.msg);
         setEmailValue('');
       }
@@ -52,6 +53,7 @@ function ForgotPassword() {
             value={email}
             onChange={(e) => setEmailValue(e.target.value)}
             required
+            disabled={isDisabled}
           />
         </div>
         <div className='error'>{userExist?"":"User not exist!"}</div>

@@ -55,12 +55,10 @@ function LogIn() {
         }
       }).catch(e=>{
         setIsValidUser(false);
-        console.log(e);
       })
     }
     catch(e)
     {
-      console.log(e);
     }
   };
 

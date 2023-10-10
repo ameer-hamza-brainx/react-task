@@ -1,8 +1,9 @@
+import axios from 'axios';
 import React, { useState,useEffect } from 'react';
 
 function ResetPassword() {
   
-
+    const [email, setEmail] = useState();
     const [password, setPassword] = useState('');
 
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,14 +14,13 @@ function ResetPassword() {
   useEffect(() => {
 
     if (token) {
-      const storedToken = localStorage.getItem(token);
-
-      if (storedToken) {
-        
-      } else {
-        alert("Token has been expired");
+      axios.post("http://localhost:5000/resetPassword/"+token,{
+      }).then(res=>{
+        setEmail(res.data);
+      }).catch(e=>{
+        alert(e.response.data.msg);
         window.location.href = "/";
-      }
+      })
     } else {
       window.location.href = "/";
     }
@@ -35,16 +35,23 @@ function ResetPassword() {
     }
     else
     {
-        let email = localStorage.getItem(token);
-        let oldData = JSON.parse(localStorage.getItem(email));
-        console.log(oldData);
-        oldData.password = password;
-        localStorage.setItem(email,JSON.stringify(oldData));
-        setPass("");
-        setConPass("");
-        localStorage.removeItem(token);
-        alert("Password has been changed");
-        window.location.href = "/";
+        // let email = localStorage.getItem(token);
+        // let oldData = JSON.parse(localStorage.getItem(email));
+        // console.log(oldData);
+        // oldData.password = password;
+        // localStorage.setItem(email,JSON.stringify(oldData));
+        axios.post("http://localhost:5000/changepassword",{
+          email,password
+        }).then(res=>{
+          setPass("");
+          setConPass("");
+          alert("Password has been changed");
+          setPassErrorFlag(true);
+          window.location.href = "/";
+        }).catch(e=>{
+          alert("some problem occured");
+        })
+        
     }
   };
 
